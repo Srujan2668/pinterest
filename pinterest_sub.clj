@@ -132,7 +132,7 @@
         VIDEO_V50_WATCH_TIME)
       :from "metrics"))
   (relate
-    (links-to PIN :inside-prop "id"))
+    (needs PIN :inside-prop "id"))
   (syn-plan
     (change-capture-cursor ""
       (subset/by-time
@@ -284,7 +284,8 @@
     updated_time
     campaign_id)
   (relate
-    (links-to AD_ACCOUNTS :inside-prop "ad_account_id")))
+    (links-to AD_ACCOUNTS :inside-prop "ad_account_id")
+    (links-to LIST_CAMPAIGNS :inside-prop "campaign_id")))
 
 (entity LIST_CAMPAIGNS
   (api-docs-url "https://developers.pinterest.com/docs/api/v5/campaigns-list")
@@ -350,24 +351,25 @@
         cpa_goal_value_in_micro_currency
         is_roas_optimized
         learning_mode_type)
-      :from "optimization_goal_metadata/conversion_tag_v3_goal_metadata")
+      :from "optimization_goal_metadata.conversion_tag_v3_goal_metadata")
     (flatten-fields
       (fields
         frequency
         timerange)
-      :from "optimization_goal_metadata/frequency_goal_metadata")
+      :from "optimization_goal_metadata.frequency_goal_metadata")
     (flatten-fields
       (fields
         scrollup_goal_value_in_micro_currency)
-      :from "optimization_goal_metadata/scrollup_goal_metadata")
+      :from "optimization_goal_metadata.scrollup_goal_metadata")
     (flatten-fields
       (fields
         lookback_window
         exclusion_window
         tag_types)
-      :from "targeting_spec/SHOPPING_RETARGETING"))
+      :from "targeting_spec.SHOPPING_RETARGETING"))
   (relate
-    (links-to AD_ACCOUNTS :inside-prop "ad_account_id")))
+    (links-to AD_ACCOUNTS :inside-prop "ad_account_id")
+    (links-to LIST_CAMPAIGNS :inside-prop "campaign_id")))
 
 (entity LIST_ADS
   (api-docs-url "https://developers.pinterest.com/docs/api/v5/ads-list")
@@ -397,5 +399,7 @@
         id)
       :from "creative_type"))
   (relate
-    (links-to AD_ACCOUNTS :inside-prop "ad_account_id")))
+    (links-to AD_ACCOUNTS :inside-prop "ad_account_id")
+    (links-to LIST_CAMPAIGNS :inside-prop "campaign_id")
+    (links-to LIST_AD_GROUPS :inside-prop "ad_group_id")))
 
